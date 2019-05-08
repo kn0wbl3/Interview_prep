@@ -90,18 +90,32 @@ class LinkedList:
         
         # TODO: Write function to insert here
         new_node = Node(value)
+        cur_node = self.head
+        prev_node = None
         counter = 0
-        while counter < pos:
-            
+        while (counter < pos) and (cur_node.next):
+            prev_node = cur_node
+            cur_node = cur_node.next
             counter += 1
+            
+        if prev_node is None:
+            new_node.next = self.head
+            self.head = new_node
+        elif (cur_node.next is None):
+            cur_node.next = new_node
+        else:
+            new_node.next = cur_node
+            prev_node.next = new_node
     
     def size(self):
         """ Return the size or length of the linked list. """
-        
-        
         # TODO: Write function to get size here
-        
-        pass
+        size = 0
+        cur_node = self.head
+        while cur_node:
+            cur_node = cur_node.next
+            size += 1
+        return size
     
     def to_list(self):
         out = []
@@ -158,9 +172,9 @@ linked_list.insert(2, 1)
 assert linked_list.to_list() == [5, 2, 1, 4], f"list contents: {linked_list.to_list()}"
 linked_list.insert(3, 6)
 assert linked_list.to_list() == [5, 2, 1, 4, 3], f"list contents: {linked_list.to_list()}"
-'''
+
 # Test size
 assert linked_list.size() == 5, f"list contents: {linked_list.to_list()}"
-'''
+
 
 print('tests finished.')
