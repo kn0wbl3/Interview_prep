@@ -22,7 +22,7 @@ class Stack(object):
         return self.num_elements
     
     def is_empty(self):
-        return (self.num_element == 0)
+        return (self.num_elements == 0)
     
     def pop(self):
         if self.is_empty():
@@ -36,3 +36,33 @@ class Stack(object):
         self.arr[self.next_index] = 0 #remove the value from the stack
         
         return ans
+    
+def tests():
+    test_stck = Stack()
+    nums = [4, 24, -80, 5, 28, 11, 10, 1, 2, 3, 14, 6]
+    
+    #testing push
+    for i in range(10):
+        test_stck.push(nums[i])
+    assert(test_stck.arr == [4, 24, -80, 5, 28, 11, 10, 1, 2, 3])
+    
+    #testing handle_stack capacity
+    test_stck.push(100)
+    assert(test_stck.arr == [4, 24, -80, 5, 28, 11, 10, 1, 2, 3, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+    
+    #testing size
+    assert(test_stck.size() == 11)
+    
+    #testing pop
+    rem_data = test_stck.pop()
+    assert(rem_data == 100)
+    test_val = 0
+    j = -1
+    while test_stck.arr[j] == 0:
+        j -= 1
+    test_val = test_stck.arr[j]
+    assert(test_val == 3)
+    
+    print('tests finished')
+    
+tests()
