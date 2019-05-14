@@ -1,3 +1,9 @@
+'''
+This stack implementation uses a linked list data structure which has the following benefits:
+1) the stack does not need to be stored in one continguous block of memory
+2) adding/deleting elements of the stack happens in constant time
+'''
+
 class LinkedListNode:
 
     def __init__(self, data):
