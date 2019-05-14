@@ -1,3 +1,10 @@
+'''
+This file shows how to build a stack using a python list. It is beneficial for stats like size of the stack but is time consuming when
+adding/deleting items from the stack. Also this stack will need to sit in one contiguous space in memory which could lead to storage
+capacity problems. If any of these drawbacks are not ideal for your program then using a stack with a linked list implementation might
+be better.
+'''
+
 class Stack(object):
     def __init__(self, initial_size = 10):
         self.arr = [0 for _ in range(initial_size)]
