@@ -39,19 +39,30 @@ class Tree_Node(object):
     
     def __gt__(self,other):
         return 0
-    
-    def __getitem__(self, key):
-        return self.value[key]
 
 def huffman_encoding(data):
     string_freq = determine_frequency(data)
-    encoded_data, tree_root = create_huffman_tree(string_freq)
-    result = walk_tree(tree_root, prefix="", code={})
-    print(result)
+    huff_root_node = create_huffman_tree(string_freq)
+    encoded_dict = walk_tree(huff_root_node, prefix="", code={}) #returns dictionary of chars with encoded values
+    encoded_msg = ''.join(encoded_dict.values()) #changes dict to single encoded message in the form of a string
+    return encoded_msg
     
 def huffman_decoding(data,tree):
-    pass
-
+    decoded_msg = []
+    cur_node = tree[1]
+    
+    for char in data:
+        if char == '0' and cur_node.left:
+            cur_node = cur_node.left[1]
+        elif cur_node.right:
+            cur_node = cur_node.right[1]
+            
+        if not isinstance(cur_node, Tree_Node):
+            decoded_msg.append(cur_node)
+            cur_node = tree[1]
+            
+    return decoded_msg
+    
 def determine_frequency(string):
     if len(string) == 0:
         return None
@@ -73,7 +84,7 @@ def create_huffman_tree(frequency_dict):
         node.set_left(left)
         node.set_right(right)
         
-        freq_q.put((left[0] + right[0], node))
+        freq_q.put((left[0] + right[0], node)) #add new node onto priority queue
     return freq_q.get()
 
 def walk_tree(node, prefix="", code={}):
@@ -88,25 +99,8 @@ def walk_tree(node, prefix="", code={}):
     return(code)
     
     
-'''
-if __name__ == "__main__":
-    codes = {}
 
-    a_great_sentence = "The bird is the word"
 
-    print ("The size of the data is: {}\n".format(sys.getsizeof(a_great_sentence)))
-    print ("The content of the data is: {}\n".format(a_great_sentence))
-
-    encoded_data, tree = huffman_encoding(a_great_sentence)
-
-    print ("The size of the encoded data is: {}\n".format(sys.getsizeof(int(encoded_data))))
-    print ("The content of the encoded data is: {}\n".format(encoded_data))
-    
-    decoded_data = huffman_decoding(encoded_data, tree)
-
-    print ("The size of the decoded data is: {}\n".format(sys.getsizeof(decoded_data)))
-    print ("The content of the encoded data is: {}\n".format(decoded_data))
-''' 
     
 def tests():
     
@@ -119,16 +113,33 @@ def tests():
     
     #create_huffman_tree tests
     x = [('e', 1), ('g', 1), ('i', 1), ('n', 1), ('s', 1), ('t', 2)]
-    root, tree = create_huffman_tree(x)
-    assert(root == 7)
+    huff_root_node = create_huffman_tree(x)
+    assert(huff_root_node[0] == 7)
     
     
     #huffman encoding tests
-    result = huffman_encoding("testing")
-    print(result)
+    encoded_string = huffman_encoding("testing")
+    assert(encoded_string == '0001001110110111')
     
+    #huffman decoding tests
+    decoded_string = huffman_decoding(encoded_string, huff_root_node)
+    assert(''.join(decoded_string) == 'segtin')
     
-        
     print('tests done')
     
 tests()
+
+'''
+if __name__ == "__main__":
+    codes = {}
+    a_great_sentence = "The bird is the word"
+    print ("The size of the data is: {}\n".format(sys.getsizeof(a_great_sentence)))
+    print ("The content of the data is: {}\n".format(a_great_sentence))
+    encoded_data = huffman_encoding(a_great_sentence)
+    print ("The size of the encoded data is: {}\n".format(sys.getsizeof(int(encoded_data))))
+    print ("The content of the encoded data is: {}\n".format(encoded_data))
+    
+    #decoded_data = huffman_decoding(encoded_data, tree)
+    print ("The size of the decoded data is: {}\n".format(sys.getsizeof(decoded_data)))
+    print ("The content of the encoded data is: {}\n".format(decoded_data))
+'''
