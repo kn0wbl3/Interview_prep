@@ -1,0 +1,29 @@
+1) LRU_Cache.py:
+	a)Overview: To get rid of the least recently used cache, you need to keep track of the order of added elements into the cache. I decided to use a queue to keep track of the order because a queue allows for O(1) time appends and pops.
+	b)Runtime: O(1)
+	c)Space Efficiency: O(n) --> the size of the dictionary is related to the capacity initialized.
+
+2) File_Recursion.py:
+	a)Overview: Because a directory can have unlimited sub directories under it, the only way to efficiently write this code is to use recursion. I created a helper function to recursively traverse the file path and find files with the correct suffix.
+	b)Runtime: O(n), where n is the number of subdirectories
+	c)Space Efficiency: O(n), where n is the number of files with the matching suffix
+
+3) Huffman_Coding.py:
+	a)Overview: This one was difficult for me. I used a PriorityQueue to build the huffman tree which was more efficient than sorting the sorting the dictionary before building the tree.
+	b)Runtime: O(n), where n is the size of the input string
+	c)Space Efficiency: O(n), where n is the size of the input string
+
+4) Active Directory.py: 
+	a)Overview:I changed the attribute users to a dictionary instead of a list. This made the lookup O(1) time.
+	b)Runtime: O(1), lookups in dictionaries are constant
+	c)Space Efficiency: O(n), based on the amount of users to be added into the dictionary
+
+5) Blockchain.py:
+	a)Overview: I originally thought to use append in the linked list, but after looking at the problem more I discovered that using prepend would be much cleaner. I also needed to do a bit of googling to see how I could turn a data structure like a list into a string for encoding.
+	b)Runtime: O(1), prepending takes constant time
+	c)Space Efficiency: O(n), the block chain grows with each block added
+
+6) Union and Intersection.py:
+	a)Overview: I pretty much wrote the same code three times which is very similar to the append code for a linked list. I made sure to use a set() so that duplicates were automatically disregarded. 
+	b)Runtime: O(n), where n is the size of the input
+	c)Space Efficiency: O(n), where n is the size of the input
