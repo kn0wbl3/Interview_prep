@@ -4,12 +4,12 @@
 	c)Space Efficiency: O(n) --> the size of the dictionary is related to the capacity initialized.
 
 2) File_Recursion.py:
-	a)Overview: Because a directory can have unlimited sub directories under it, the only way to efficiently write this code is to use recursion. I created a helper function to recursively traverse the file path and find files with the correct suffix.
+	a)Overview: Because a directory can have unlimited sub directories under it, the only way to efficiently write this code is to use recursion. I created a helper function to recursively traverse the file path and find files with the correct suffix. I also used a python list as the return element because it is a simple structure and the question isn't asking for any efficient lookups, which a dictionary would be better for.
 	b)Runtime: O(n), where n is the number of subdirectories
 	c)Space Efficiency: O(n), where n is the number of files with the matching suffix
 
 3) Huffman_Coding.py:
-	a)Overview: This one was difficult for me. I used a PriorityQueue to build the huffman tree which was more efficient than sorting the sorting the dictionary before building the tree.
+	a)Overview: This one was difficult for me. I used a PriorityQueue to build the huffman tree which was more efficient than sorting the sorting the dictionary before building the tree. A Priority Queue is helpful here because it allows me to take the most important element in constant time.
 	b)Runtime: O(n), where n is the size of the input string
 	c)Space Efficiency: O(n), where n is the size of the input string
 
@@ -19,7 +19,7 @@
 	c)Space Efficiency: O(n), based on the amount of users to be added into the dictionary
 
 5) Blockchain.py:
-	a)Overview: I originally thought to use append in the linked list, but after looking at the problem more I discovered that using prepend would be much cleaner. I also needed to do a bit of googling to see how I could turn a data structure like a list into a string for encoding.
+	a)Overview: I originally thought to use append in the linked list, but after looking at the problem more I discovered that using prepend would be much cleaner. I also needed to do a bit of googling to see how I could turn a data structure like a list into a string for encoding. I needed to  import json to be able to encode a list of all elements into a string format.
 	b)Runtime: O(1), prepending takes constant time
 	c)Space Efficiency: O(n), the block chain grows with each block added
 
