@@ -42,10 +42,15 @@ class Tree_Node(object):
 
 def huffman_encoding(data):
     string_freq = determine_frequency(data)
-    huff_root_node = create_huffman_tree(string_freq)
-    encoded_dict = walk_tree(huff_root_node, prefix="", code={}) #returns dictionary of chars with encoded values
-    encoded_msg = ''.join(encoded_dict.values()) #changes dict to single encoded message in the form of a string
-    return encoded_msg
+    if string_freq == None:
+        return None
+    elif len(string_freq) == 1: #if string has all the same letters, the huffman encoding is 0
+        return 0
+    else:
+        huff_root_node = create_huffman_tree(string_freq)
+        encoded_dict = walk_tree(huff_root_node, prefix="", code={}) #returns dictionary of chars with encoded values
+        encoded_msg = ''.join(encoded_dict.values()) #changes dict to single encoded message in the form of a string
+        return encoded_msg
     
 def huffman_decoding(data,tree):
     decoded_msg = []
@@ -124,6 +129,14 @@ def tests():
     #huffman decoding tests
     decoded_string = huffman_decoding(encoded_string, huff_root_node)
     assert(''.join(decoded_string) == 'segtin')
+    
+    #edge case 1: empty
+    encoded_string = huffman_encoding('')
+    assert(encoded_string == None)
+    
+    #edge case 2: repeated chars
+    encoded_string = huffman_encoding('AAAAAAAAAA')
+    assert(encoded_string == 0)
     
     print('tests done')
     
