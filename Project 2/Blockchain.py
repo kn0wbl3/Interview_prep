@@ -55,5 +55,25 @@ def tests():
     assert(chain.head.previous_hash == blkA.hash)
     assert(blkA.previous_hash == blk.hash)
     
+    #test case 2: block with prev_hash already set
+    blk = Block('18:18 4/2/2019', '1', '7b176106329acb0fb7c966445403f4909abe2dafd5caa09f9676307aa80d8c87')
+    blkA = Block('17:12 6/8/9', '2', 0)
+    blkB = Block('17:12 15/12/28', '3', 0)
+    
+    assert(blk.get_prev_hash() == blkA.get_hash())
+    
+    #test case 3: no data in blocks
+    blk = Block('', '', '')
+    blkA = Block('', '', '')
+    blkB = Block('', '', '')
+    
+    chain = Blockchain()
+    chain.prepend(blk)
+    chain.prepend(blkA)
+    chain.prepend(blkB)
+    
+    assert(chain.head.previous_hash == blkA.hash)
+    assert(blkA.previous_hash == blk.hash)
+    
     print('tests done')
 tests()
