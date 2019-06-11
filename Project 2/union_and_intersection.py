@@ -46,8 +46,12 @@ def union(llist_1, llist_2):
     def walk_ll(ll, result_LL):
         cur_node = ll.head
         while cur_node:
-            result_LL.append(cur_node.value)
-            cur_node = cur_node.next
+            try:
+                x = cur_node.value / 1
+                result_LL.append(cur_node.value)
+                cur_node = cur_node.next
+            except:
+                raise ValueError('ERROR: Non int elements added to the Linked List. Closing Program')
         return result_LL
 
     union_ll = LinkedList()
@@ -114,3 +118,35 @@ for i in element_2:
 
 print (union(linked_list_3,linked_list_4))
 print (intersection(linked_list_3,linked_list_4))
+
+#edge case 1
+linked_list_1 = LinkedList()
+linked_list_2 = LinkedList()
+
+element_1 = []
+element_2 = []
+
+for i in element_1:
+    linked_list_1.append(i)
+
+for i in element_2:
+    linked_list_2.append(i)
+
+print (union(linked_list_1,linked_list_2))
+print (intersection(linked_list_1,linked_list_2))
+
+#edge case 2
+linked_list_1 = LinkedList()
+linked_list_2 = LinkedList()
+
+element_1 = ['a','b','n']
+element_2 = ['z','r']
+
+for i in element_1:
+    linked_list_1.append(i)
+
+for i in element_2:
+    linked_list_2.append(i)
+
+print (union(linked_list_1,linked_list_2))
+print (intersection(linked_list_1,linked_list_2))
