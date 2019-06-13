@@ -9,10 +9,11 @@ class LRU_Cache(object):
 
     def get_val(self, key):
         # Retrieve item from provided key. Return -1 if nonexistent. 
-        if self.x.get(key,-1) > 0:
+        if self.x.get(key, -1) > 0:
             val = self.x[key]
             self.x.pop(key)
             self.x[key] = val
+            return val
         else:
             return -1
         
@@ -21,8 +22,8 @@ class LRU_Cache(object):
         # Set the value if the key is not present in the cache. If the cache is at capacity remove the oldest item. 
         if self.get_val(key) < 0: 
             if len(self.x) == self.capacity:
-                self.x.pop(key)
-            self.x[key] = value
+                self.x.popitem(False) #remove the least recently used item (in the front of the dict)
+            self.x[key] = value #add new item to the back of dict
             
 #test 1
 our_cache = LRU_Cache(5)
@@ -38,7 +39,6 @@ our_cache.set_val(4, 4)
 our_cache.set_val(5, 5)
 our_cache.set_val(6, 6) #overflow on capacity, rem oldest item
 assert(our_cache.x == {2:2, 3:3, 4:4, 5:5, 6:6})
-assert(our_cache.tracker == OrderedDict([2, 3, 4, 5, 6]))
 
 assert(our_cache.get_val(2)==2)     # returns 2
 assert(our_cache.x == {3:3, 4:4, 5:5, 6:6, 2:2}) #testing for keys being called again and sent to the back of the list
@@ -57,7 +57,6 @@ our_cache.set_val(4, 4)
 our_cache.set_val(5, 5)
 our_cache.set_val(6, 6)
 assert(our_cache.x == {6:6})
-assert(our_cache.tracker == OrderedDict([6]))
 
 #test3 --> duplicates
 our_cache = LRU_Cache(5)
@@ -72,4 +71,3 @@ our_cache.set_val(1, 1)
 our_cache.set_val(1, 1)
 our_cache.set_val(1, 1)
 assert(our_cache.x == {1:1})
-assert(our_cache.tracker == OrderedDict([1]))
