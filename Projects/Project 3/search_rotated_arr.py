@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Created on Mon Jun 17 16:43:42 2019
+Created on Mon Jun 17 22:37:48 2019
 
-@author: amanuele2
+@author: Andrew
 """
 
 def rotated_array_search(input_list, number):
@@ -14,7 +14,6 @@ def rotated_array_search(input_list, number):
     Returns:
        int: Index or -1
     """
-    first_num = input_list[0]
    
     st_indx = 0
     end_indx = len(input_list) - 1
@@ -22,14 +21,21 @@ def rotated_array_search(input_list, number):
     while st_indx < end_indx:
         mid_indx = (st_indx + end_indx) // 2
         mid_num = input_list[mid_indx]
+        st_num = input_list[st_indx]
+        end_num = input_list[end_indx]
         
-        if mid_num >= first_num:
-            st_indx = mid_indx
+        if number == mid_num:
+            return mid_indx
+        elif st_num > end_num:
+            if (st_num <= number < mid_num):
+                end_indx = mid_indx
+            else:
+                st_indx = mid_indx
         else:
-            end_indx = mid_indx
-            
-        if (st_indx + 1) == end_indx:
-            return end_indx
+            if (st_num <= number < mid_num):
+                end_indx = mid_indx
+            else:
+                st_indx = mid_indx
             
     return -1
 
