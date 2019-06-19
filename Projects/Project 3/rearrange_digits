@@ -1,0 +1,80 @@
+def rearrange_digits(input_list):
+    """
+    Rearrange Array Elements so as to form two number such that their sum is maximum.
+
+    Args:
+       input_list(list): Input List
+    Returns:
+       (int),(int): Two maximum sums
+    """
+    first_max = ''
+    second_max = ''
+    
+    srtd_list = merge_sort(input_list)
+    
+    if len(srtd_list) <=1:
+        return [srtd_list[0], 0]
+    
+    for i in range(len(srtd_list)):
+        if i % 2 == 0: #if number is even
+            first_max += str(srtd_list[i])
+        else:
+            second_max += str(srtd_list[i])
+            
+    return [int(first_max), int(second_max)]
+        
+
+def merge_sort(arr):
+    if len(arr) <=1:
+        return arr
+    
+    mid = len(arr) // 2
+    
+    left = arr[:mid]
+    right = arr[mid:]
+    
+    left = merge_sort(left)
+    right = merge_sort(right)
+    
+    return merge(left, right)
+    
+    
+def merge(l, r):
+    i = 0 
+    j = 0
+    sorted_arr = []
+    while i < len(l) and j < len(r):
+        if l[i] < r[j]:
+            sorted_arr.append(r[j])
+            j+=1
+        else:
+            sorted_arr.append(l[i])
+            i+=1
+        
+    sorted_arr += l[i:]
+    sorted_arr += r[j:]
+    
+    return sorted_arr
+                
+
+def tests():
+    test_list = [
+                    [[1, 2, 3, 4, 5], [531, 42],[5,4,3,2,1]], 
+                    [[4, 6, 2, 5, 9, 8], [964, 852],[9,8,6,5,4,2]],
+                    [[1], [1, 0],[1]], #assuming this is how we want to handle single list vals EDGECASE
+                    [[9,9,9], [99, 9],[9,9,9]],
+                    [[1,2,1,2], [21,21],[2,2,1,1]], #dupes, EDGE
+                    [[6,5,4,3,2,1], [642, 531],[6,5,4,3,2,1]]
+                 ]
+    
+    #test merge_sort
+    for test in test_list:
+        assert merge_sort(test[0]) == test[2], merge_sort(test[0])
+    #test rearrange_digits
+    for test in test_list:
+        assert rearrange_digits(test[0]) == test[1], rearrange_digits(test[0])
+    
+    
+    print('tests done')
+    
+tests()
