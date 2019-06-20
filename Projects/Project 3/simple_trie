@@ -1,0 +1,92 @@
+'''
+Help from https://towardsdatascience.com/implementing-a-trie-data-structure-in-python-in-less-than-100-lines-of-code-a877ea23c1a1
+
+'''
+
+class TrieNode(object):
+    def __init__(self):
+        self.is_word = False
+        self.children = {}
+
+
+class Trie(object):
+    def __init__(self):
+        self.root = TrieNode()
+
+    def add(self, word):
+        """
+        Add `word` to trie
+        """
+        current_node = self.root
+
+        for char in word:
+            if char not in current_node.children:
+                current_node.children[char] = TrieNode()
+            current_node = current_node.children[char]
+
+        current_node.is_word = True
+
+    def exists(self, word):
+        """
+        Check if word exists in trie
+        """
+        current_node = self.root
+
+        for char in word:
+            if char not in current_node.children:
+                return False
+            current_node = current_node.children[char]
+
+        return current_node.is_word
+    
+    def find(self, prefix):
+        if not self.root.children:
+            return False
+        
+        current_node = self.root
+
+        for char in prefix: #can search for a prefix with more than 1 char
+            if char not in current_node.children:
+                return False
+            current_node = current_node.children[char]
+
+        return current_node
+    
+    def suffixes(self, suffix = ''):
+        ## Recursive function that collects the suffix for 
+        ## all complete words below this point
+        current_node = self.root
+        
+        if not current_node.children:
+            return 0
+        
+        
+
+    
+word_list = ['apple', 'bear', 'goo', 'good', 'goodbye', 'goods', 'goodwill', 'gooses'  ,'zebra']
+word_trie = Trie()
+
+# Add words
+for word in word_list:
+    word_trie.add(word)
+
+# Test words
+test_words = ['bear', 'goo', 'good', 'goos']
+for word in test_words:
+    if word_trie.exists(word):
+        print('"{}" is a word.'.format(word))
+    else:
+        print('"{}" is not a word.'.format(word))
+        
+#test finding prefixes
+test_prefixes = ['a', 'good', 'g']
+for pref in test_prefixes:
+    print(word_trie.find(pref).children)
+    '''
+    should print:
+    {'p': <__main__.TrieNode object at 0x0000025DEE77B550>}
+    
+    {'b': <__main__.TrieNode object at 0x0000025DEE77B0B8>, 's': <__main__.TrieNode object at 0x0000025DEE77B0F0>, 'w': <__main__.TrieNode object at 0x0000025DEE77B780>}
+    
+    {'o': <__main__.TrieNode object at 0x0000025DEE77B208>}
+    '''
