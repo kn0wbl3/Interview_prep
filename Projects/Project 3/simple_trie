@@ -52,17 +52,28 @@ class Trie(object):
 
         return current_node
     
+    '''
+    def suffixes(self, start_node, suffix = ''):
+        ## Recursive function that collects the suffix for 
+        ## all complete words below this point
+        
+        if not start_node.children:
+            return suffix
+        
+        for child in start_node.children:
+            return self.suffixes((suffix + child))
+        '''
     def suffixes(self, suffix = ''):
         ## Recursive function that collects the suffix for 
         ## all complete words below this point
-        current_node = self.root
         
-        if not current_node.children:
-            return 0
+        if not self.root.children:
+            return suffix
         
-        
+        for child in self.root.children:
+            return self.suffixes((suffix + child))
 
-    
+
 word_list = ['apple', 'bear', 'goo', 'good', 'goodbye', 'goods', 'goodwill', 'gooses'  ,'zebra']
 word_trie = Trie()
 
@@ -90,3 +101,8 @@ for pref in test_prefixes:
     
     {'o': <__main__.TrieNode object at 0x0000025DEE77B208>}
     '''
+    
+#test suffixes
+for pref in test_prefixes:
+    st_node = word_trie.find(pref)
+    print(word_trie.suffixes())
