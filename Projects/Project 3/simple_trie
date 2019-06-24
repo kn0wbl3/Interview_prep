@@ -7,6 +7,28 @@ class TrieNode(object):
     def __init__(self):
         self.is_word = False
         self.children = {}
+        
+    def insert(self, char):
+        ## Add a child node in this Trie
+        self.children[char] = TrieNode()
+        
+    def suffixes(self, suffix = ''):
+        ## Recursive function that collects the suffix for 
+        ## all complete words below this point
+        def suf_helper(char, suffix):
+            if not node.children:
+                return suffix
+            
+            return node.suf_helper(suffix + char)
+        
+        suffix_list = []
+        chars = list(self.children.keys())
+        nodes = list(self.children.values())
+        
+        for i in range(len(chars)):
+            return nodes[i].suf_helper(suffix + chars[i])
+        
+        return suffix_list
 
 
 class Trie(object):
@@ -21,7 +43,7 @@ class Trie(object):
 
         for char in word:
             if char not in current_node.children:
-                current_node.children[char] = TrieNode()
+                current_node.insert(char)
             current_node = current_node.children[char]
 
         current_node.is_word = True
@@ -49,8 +71,10 @@ class Trie(object):
             if char not in current_node.children:
                 return False
             current_node = current_node.children[char]
-
+ 
         return current_node
+    
+    
     
     '''
     def suffixes(self, start_node, suffix = ''):
@@ -63,15 +87,6 @@ class Trie(object):
         for child in start_node.children:
             return self.suffixes((suffix + child))
         '''
-    def suffixes(self, suffix = ''):
-        ## Recursive function that collects the suffix for 
-        ## all complete words below this point
-        
-        if not self.root.children:
-            return suffix
-        
-        for child in self.root.children:
-            return self.suffixes((suffix + child))
 
 
 word_list = ['apple', 'bear', 'goo', 'good', 'goodbye', 'goods', 'goodwill', 'gooses'  ,'zebra']
@@ -105,4 +120,4 @@ for pref in test_prefixes:
 #test suffixes
 for pref in test_prefixes:
     st_node = word_trie.find(pref)
-    print(word_trie.suffixes())
+    print(st_node.suffixes())
