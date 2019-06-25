@@ -36,6 +36,8 @@ class RouteTrie:
         cur_node = self.root
         
         for node in nodes:
+            if nodes == ['','']:
+                return cur_node.handler
             if node not in cur_node.children:
                 return None
             cur_node = cur_node.children[node]
@@ -88,3 +90,17 @@ print(router.lookup("/home")) # should print 'not found handler' or None if you 
 print(router.lookup("/home/about")) # should print 'about handler'
 print(router.lookup("/home/about/")) # should print 'about handler' or None if you did not handle trailing slashes
 print(router.lookup("/home/about/me")) # should print 'not found handler' or None if you did not implement one
+
+print('---------------')
+router.add_handler("/home", "home handler")
+router.add_handler("/home/about/me", "me handler")
+
+print(router.lookup("/home")) #should print home handler
+print(router.lookup("/home/about/me")) #should print me handler
+
+print('---------------')
+router.add_handler("https://classroom.udacity.com/nanodegrees/nd256/parts/da17de0f-f834-46f8-bb48-ee2705d95dc4/ \
+modules/bd252a0b-e9e7-473b-bcc1-bc7e3153568b/lessons/8ec390d0-e99d-44c0-88f9-f8f9faf467fc/project", "project handler")
+
+print(router.lookup("https://classroom.udacity.com/nanodegrees/nd256/parts/da17de0f-f834-46f8-bb48-ee2705d95dc4/ \
+modules/bd252a0b-e9e7-473b-bcc1-bc7e3153568b/lessons/8ec390d0-e99d-44c0-88f9-f8f9faf467fc/project"))
