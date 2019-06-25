@@ -1,0 +1,34 @@
+1) find_square_root.py:
+	a)Overview: I created two versions of this problem for reference. sqrt_bs uses a binary search methodology to test if the squared value of mid is ==, >, or < the number.
+	b)Runtime: O(log(n))
+	c)Space Efficiency: O(1)
+
+2) search_rotated_arr.py:
+	a)Overview: Search rotated arr uses a binary search methodology as well to cut down on runtime. First we need to find the pivot and then search to the left or right depending on the index of the pivot.
+	b)Runtime: O(log(n))
+	c)Space Efficiency: O(1), because we always pass the array into our function. we do not make a copy of it.
+
+3) rearrange_digits.py:
+	a)Overview: This uses merge sort to divide and conquer the array and sort it. Then we walk through the sorted array to place the numbers appropriately.
+	b)Runtime: O(n*log(n))) --> logn for the sort, n for the walking through the sorted array.
+	c)Space Efficiency: O(n) --> we need a new list to keep track of the sorted array
+
+4) dutch_national_flag.py: 
+	a)Overview: I used a counting sort to process this. Needed to create a list that had a size of the highest possible digit in the input.
+	b)Runtime: O(n)
+	c)Space Efficiency: O(n) 
+
+5) simple_trie.py:
+	a)Overview: Needed to use classes to create the TrieNode and Trie. For node.suffix I added a result list which held all the words that were found while recursively traversing the trie.
+	b)Runtime: O(1), because dictionaries are used for lookups, adds, and deletions
+	c)Space Efficiency: O(n*m), based on number of paths created
+
+6) max_and_min.py:
+	a)Overview: Walked through the unsorted list checking if that value was the max or min val.
+	b)Runtime: O(n)
+	c)Space Efficiency: O(1) 
+
+7) router.py:
+	a)Overview: Used a trie for constant time lookups, deletions, adds for our router.
+	b)Runtime: O(1)
+	c)Space Efficiency: O(n*m), based on number of paths created 
