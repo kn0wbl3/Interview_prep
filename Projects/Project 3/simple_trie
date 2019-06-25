@@ -15,20 +15,23 @@ class TrieNode(object):
     def suffixes(self, suffix = ''):
         ## Recursive function that collects the suffix for 
         ## all complete words below this point
-        def suf_helper(char, suffix):
-            if not node.children:
-                return suffix
-            
-            return node.suf_helper(suffix + char)
         
         suffix_list = []
-        chars = list(self.children.keys())
-        nodes = list(self.children.values())
+        children = self.children
         
-        for i in range(len(chars)):
-            return nodes[i].suf_helper(suffix + chars[i])
+        for char in children:
+            suffix_list = children.get(char).suf_helper(suffix + char, suffix_list)
         
         return suffix_list
+    
+    def suf_helper(self, new_suffix, new_suf_list):
+        new_children = self.children
+        if self.is_word:
+            new_suf_list.append(new_suffix)
+        
+        for char, node in new_children.items():
+            node.suf_helper(new_suffix + char, new_suf_list)
+        return new_suf_list
 
 
 class Trie(object):
@@ -73,20 +76,6 @@ class Trie(object):
             current_node = current_node.children[char]
  
         return current_node
-    
-    
-    
-    '''
-    def suffixes(self, start_node, suffix = ''):
-        ## Recursive function that collects the suffix for 
-        ## all complete words below this point
-        
-        if not start_node.children:
-            return suffix
-        
-        for child in start_node.children:
-            return self.suffixes((suffix + child))
-        '''
 
 
 word_list = ['apple', 'bear', 'goo', 'good', 'goodbye', 'goods', 'goodwill', 'gooses'  ,'zebra']
@@ -121,3 +110,10 @@ for pref in test_prefixes:
 for pref in test_prefixes:
     st_node = word_trie.find(pref)
     print(st_node.suffixes())
+    
+    '''
+    should print:
+    ['pple']
+    ['bye', 's', 'will']
+    ['oo', 'ood', 'oodbye', 'oods', 'oodwill', 'ooses']
+    '''
